@@ -5,6 +5,9 @@
 Example 1:
 ![preference-fiber](preference-fiber.png)
 
+Example 2:
+![preference-fiber-large](preference_fiber_large.png)
+
 This project implements a special mathematical structure: a fiber bundle with directed graphs as the base space and integer groups (Z) as fibers, applied to modeling market goods preference relationships.
 
 ## Mathematical Structure
