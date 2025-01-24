@@ -83,6 +83,80 @@ This project implements a special mathematical structure: a fiber bundle with di
 - Arrows in base plane represent preference relationships between products
 - Red connection lines represent mappings between utility spaces
 
+## Mathematical Inference
+
+### 1. Relationship with Traditional Utility Theory
+
+#### 1.1 Limitations of Traditional Utility Theory
+- Traditional utility theory assumes continuous utility function u: X → ℝ
+- Requires complete comparability of preferences (completeness)
+- Assumes utility values can vary continuously in real domain
+
+#### 1.2 Generalization through Fiber Bundle Structure
+- Relaxes completeness assumption:
+  - Directed graph structure in base space allows partial order relations
+  - Not all products need to be directly comparable
+- Discretizes continuous utility values:
+  - Replaces real domain ℝ with integer group Z
+  - Better matches discrete nature of actual purchasing behavior
+- Localizes utility comparisons:
+  - Implements local utility conversions through fiber connections
+  - Avoids requirement for global utility function existence
+
+### 2. Mathematical Equivalence Proof
+
+#### 2.1 Degeneration in Special Cases
+The structure degenerates to traditional utility theory under the following conditions:
+1. Base space is a complete graph (edges between all nodes)
+2. All connection mappings are commutative: φ_{e₁} ∘ φ_{e₂} = φ_{e₂} ∘ φ_{e₁}
+3. Global consistent linear coefficient exists with a = 1
+
+Theorem: Under these conditions, there exists a global utility function u: V → Z such that:
+- ∀v₁, v₂ ∈ V, v₁ ≻ v₂ ⟺ u(v₁) > u(v₂)
+- ∀e = (v₁, v₂) ∈ E, φ_e(z) = z + (u(v₂) - u(v₁))
+
+#### 2.2 Topological Characteristics
+1. Overall structure forms hierarchical fiber bundle:
+   - π: E → G is locally trivial fiber bundle
+   - Structure group is integer addition group (Z, +)
+   - Each fiber is homeomorphic to Z
+
+2. Compatibility conditions equivalent to flat connection:
+   - Curvature vanishes: R(X,Y) = 0
+   - Corresponds to path independence of utility comparisons
+
+### 3. Theoretical Advantages
+
+#### 3.1 Topological Invariants
+- Enables definition of homology groups for preference structure
+- Studies preference stability through persistent homology
+- Characteristic classes of fiber bundle reflect global structural obstacles
+
+#### 3.2 Discretization Benefits
+1. Better matches reality:
+   - Product quantities naturally integer-valued
+   - Utility comparisons typically discrete
+2. Computational advantages:
+   - Avoids numerical errors from continuity
+   - Facilitates computer implementation
+
+#### 3.3 Localization Principle
+1. Decomposes global utility comparisons into local ones
+2. Ensures consistency of local comparisons through connection structure
+3. Enables utility comparisons in incomplete markets
+
+### 4. Application Extensions
+
+#### 4.1 Incomplete Market Analysis
+- Handles market structures with incomplete information
+- Studies transition from local to global equilibrium
+- Analyzes market segmentation effects
+
+#### 4.2 Consumer Behavior Models
+- Describes decision processes under bounded rationality
+- Simulates choice behavior based on local comparisons
+- Studies dynamic evolution of preference structures
+
 ## Usage
 
 ### Installation
