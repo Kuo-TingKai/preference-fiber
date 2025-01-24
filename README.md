@@ -1,110 +1,127 @@
 # Market Goods Preference Fiber Bundle
 
+[English](README.md) | [繁體中文](README_zh.md)
+
+Example 1:
 ![preference-fiber](preference-fiber.png)
 
-這個專案實現了一個特殊的數學結構：以有向圖為基底空間，整數群(Z)為纖維的纖維叢(Fiber Bundle)結構，並應用於市場商品偏好關係的建模。
+This project implements a special mathematical structure: a fiber bundle with directed graphs as the base space and integer groups (Z) as fibers, applied to modeling market goods preference relationships.
 
-## 數學結構說明
+## Mathematical Structure
 
-### 1. 基本元素
+### 1. Basic Elements
 
-#### 1.1 基底空間 (Base Space)
-- 採用有向圖(Directed Graph) G = (V,E) 作為基底空間
-- V 表示市場商品集合（如：MacBook, iPad, AirPods 等）
-- E 表示商品間的偏好關係
-- 每個節點 v ∈ V 都具有整數值的纖維化層級 l(v) ∈ Z
-- 邊的方向遵循偏序關係：若 l(v₁) > l(v₂)，則存在有向邊 (v₁, v₂) ∈ E
+#### 1.1 Base Space
+- Uses directed graph G = (V,E) as base space
+- V represents the set of market goods (e.g., MacBook, iPad, AirPods)
+- E represents preference relationships between goods
+- Each node v ∈ V has an integer-valued fibration level l(v) ∈ Z, representing the quantity of individual goods
+- Edge direction follows partial ordering: if l(v₁) > l(v₂), then there exists a directed edge (v₁, v₂) ∈ E
 
-#### 1.2 纖維 (Fiber)
-- 每個商品節點 v 上都附著一個整數群 Z 作為纖維 F_v
-- F_v ≅ Z 表示該商品的效用或價值空間
-- 纖維是垂直於基底空間的整數格點結構，表示離散的效用層級
+#### 1.2 Fiber
+- Each product node v has an integer group Z attached as fiber F_v
+- F_v ≅ Z represents the purchase quantity of that product
+- Due to the assumption that more quantity is preferred, it also forms a partial order structure
 
-#### 1.3 總空間 (Total Space)
-- 總空間 E 是所有纖維的聯集：E = ⋃_{v∈V} F_v
-- 配備投影映射 π: E → G
-- π^{-1}(v) ≅ Z 對每個 v ∈ V 成立
+#### 1.3 Total Space
+- Total space E is the union of all fibers: E = ⋃_{v∈V} F_v
+- Equipped with projection mapping π: E → G
+- π^{-1}(v) ≅ Z holds for each v ∈ V
 
-### 2. 聯絡結構 (Connection Structure)
+### 2. Connection Structure
 
-#### 2.1 局部平凡化
-- 對每個節點 v，存在同胚 φ_v: π^{-1}(U_v) → U_v × Z
-- U_v 是 v 的鄰域
-- 這確保了效用比較的局部一致性
+#### 2.1 Local Trivialization
+- For each node v, there exists a homeomorphism φ_v: π^{-1}(U_v) → U_v × Z
+- U_v is the neighborhood of v
+- This ensures local consistency of utility comparisons
 
-#### 2.2 聯絡映射
-- 在相鄰商品之間定義了保序線性變換作為聯絡
-- 對於邊 e = (v₁, v₂) ∈ E，聯絡映射 φ_e: F_{v₁} → F_{v₂}
-- φ_e(z) = z + b_e，其中：
-  - z 表示原始效用值
-  - b_e 為整數平移量（表示商品間的效用差異）
-- 保序性：若 z₁ > z₂，則 φ_e(z₁) > φ_e(z₂)
+#### 2.2 Connection Mapping
+- Order-preserving linear transformations defined as connections between adjacent products
+- For edge e = (v₁, v₂) ∈ E, connection mapping φ_e: F_{v₁} → F_{v₂}
+- φ_e(z) = az + b_e, where:
+  - z represents original utility value
+  - a is a positive real number (ensuring order preservation)
+  - b_e is integer translation (representing utility difference between products)
+- Order preservation: if z₁ > z₂, then φ_e(z₁) > φ_e(z₂)
+- This linear mapping allows natural partial ordering between discrete points on different fibers
 
-#### 2.3 相容性條件
-- 對於任意路徑 γ = (e₁, ..., e_n)，複合映射滿足：
+#### 2.3 Compatibility Conditions
+- For any path γ = (e₁, ..., e_n), composite mapping satisfies:
   - φ_{e_n} ∘ ... ∘ φ_{e₁} = φ_γ
-- 這確保了跨商品效用比較的一致性
+- This ensures consistency in cross-product utility comparisons
 
-### 3. 經濟學解釋
+### 3. Economic Interpretation
 
-#### 3.1 偏好結構
-- 基底空間的有向邊表示商品間的偏好關係
-- 纖維化層級反映商品的基礎價值排序
-- 纖維空間表示具體的效用量化
+#### 3.1 Preference Structure
+- Directed edges in base space represent preference relationships between products
+- Fibration levels reflect basic value ordering of products
+- Fiber space represents concrete utility quantification
 
-#### 3.2 效用映射
-- 垂直纖維表示單個商品的效用範圍
-- 聯絡映射描述不同商品間的效用轉換關係
-- 保序性確保偏好的遞移性
+#### 3.2 Utility Mapping
+- Vertical fibers represent utility range of individual products
+- Connection mappings describe utility conversion relationships between different products
+- Order preservation ensures preference transitivity
 
-### 4. 實現特點
+### 4. Implementation Features
 
-#### 4.1 數據結構
-- 使用 NetworkX 的 DiGraph 實現商品關係網絡
-- 節點屬性包含商品名稱和纖維化層級
-- 邊屬性包含聯絡映射參數
+#### 4.1 Data Structure
+- Uses NetworkX's DiGraph for product relationship network
+- Node attributes:
+  - name: product name
+  - level: fibration level
+  - fiber_range: utility value range
+- Edge attributes:
+  - a: linear mapping coefficient
+  - b: translation value
+  - connection_type: connection type
 
-#### 4.2 視覺化特徵
-- 3D 空間中的垂直線段表示各商品的效用空間
-- 基底平面上的箭頭表示商品間的偏好關係
-- 紅色連接線表示效用空間間的映射關係
+#### 4.2 Visualization Features
+- Vertical line segments in 3D space represent utility spaces of products
+- Arrows in base plane represent preference relationships between products
+- Red connection lines represent mappings between utility spaces
 
-## 使用方法
+## Usage
 
-### 安裝依賴
+### Installation
 ```bash
 pip install networkx matplotlib numpy
 ```
 
-### 基本使用
+### Basic Usage
 ```python
-# 創建纖維叢
+# Create fiber bundle
 bundle = FibrationBundle(base_nodes=6, fibration_levels=3, fiber_height=5)
 
-# 視覺化
+# Visualize
 bundle.visualize()
 
-# 檢查相容性
+# Check compatibility
 is_compatible = bundle.check_compatibility()
 ```
 
-### 參數說明
-- `base_nodes`: 基底空間的節點數
-- `fibration_levels`: 纖維化層級數
-- `fiber_height`: 纖維的視覺化高度
+### Parameters
+- `base_nodes`: number of nodes in base space
+- `fibration_levels`: number of fibration levels
+- `fiber_height`: visualization height of fibers
+- `connection_params`: connection mapping parameter configuration
+  - `a`: linear coefficient
+  - `b`: translation value
+  - `type`: mapping type
 
-## 理論應用
+## Theoretical Applications
 
-這個結構可以用於：
-1. 市場商品偏好關係的數學建模
-2. 消費者效用理論的離散化表示
-3. 商品價值網絡的拓撲分析
-4. 市場結構的同調理論研究
+This structure can be used for:
+1. Mathematical modeling of market goods preference relationships
+2. Discrete representation of consumer utility theory
+3. Topological analysis of product value networks
+4. Homological study of market structures
 
-## 未來擴展方向
+## Future Extensions
 
-1. 引入非線性聯絡映射以描述更複雜的偏好關係
-2. 計算偏好網絡的持續同調
-3. 加入時間維度研究偏好動態演化
-4. 實現基於纖維叢結構的市場均衡分析
-5. 開發基於纖維叢的商品推薦算法
+1. Introduce nonlinear connection mappings to describe more complex preference relationships
+2. Compute persistent homology of preference networks
+3. Add time dimension to study preference dynamics
+4. Implement market equilibrium analysis based on fiber bundle structure
+5. Develop product recommendation algorithms based on fiber bundles
+6. Study the impact of different connection mapping types on preference structure
+7. Implement adaptive connection parameter optimization
